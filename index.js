@@ -4,7 +4,7 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 dotenv.config();
 const uri = process.env.MONGODB_URI;
 const app = express();
@@ -30,6 +30,13 @@ async function run() {
       res.json(result);
     });
 
+    app.get("/facility/:id", async (req, res) => {
+      const { id } = await req.params;
+      const result = await facilityCollection.findOne({
+        _id: new ObjectId(id),
+      });
+      res.json(result);
+    });
     app.post("/facility", async (req, res) => {
       const facilityData = req.body;
       // console.log(facilityData, "Facility data");
