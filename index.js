@@ -66,7 +66,6 @@ async function run() {
     });
     app.post("/facility", async (req, res) => {
       const facilityData = req.body;
-      // console.log(facilityData, "Facility data");
       const result = await facilityCollection.insertOne(facilityData);
       res.json(result);
     });
@@ -91,6 +90,11 @@ async function run() {
       const result = await facilityCollection.deleteOne({
         _id: new ObjectId(id),
       });
+      res.json(result);
+    });
+
+    app.get("/featured", async (req, res) => {
+      const result = await facilityCollection.find().limit(6).toArray();
       res.json(result);
     });
     // await client.db("admin").command({ ping: 1 });
