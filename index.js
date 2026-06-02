@@ -35,13 +35,20 @@ async function run() {
     });
 
     app.get("/booking/:email", async (req, res) => {
-      // console.log(email, "email");
       const { email } = req.params;
       const result = await bookingCollection
         .find({
           user_email: email,
         })
         .toArray();
+      res.json(result);
+    });
+
+    app.delete("/booking/:bookingId", async (req, res) => {
+      const { bookingId } = req.params;
+      const result = await bookingCollection.deleteOne({
+        _id: new ObjectId(bookingId),
+      });
       res.json(result);
     });
 
