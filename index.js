@@ -77,7 +77,7 @@ async function run() {
 
     app.get("/facility", async (req, res) => {
       const result = await facilityCollection.find().toArray();
-      res.json(result);
+      res.send(result);
     });
 
     app.get("/facility/:id", verifyToken, async (req, res) => {
